@@ -1,0 +1,3 @@
+sudo apt-get install liboctave-dev
+
+cpanm --verbose Inline::CPP
