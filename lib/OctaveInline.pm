@@ -3,9 +3,11 @@ package OctaveInline;
 use strict;
 use warnings;
 use File::Spec;
+use File::Which;
 
 sub Inline {
 	return unless $_[-1] eq 'CPP';
+	die "octave-config not available" unless which qw(octave-config);
 	chomp(my $octave_dir = `octave-config -p OCTINCLUDEDIR`);
 	my $oct_inc = join " ", map { "-I$_" } (
 		$octave_dir,
