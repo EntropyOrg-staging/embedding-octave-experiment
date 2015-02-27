@@ -7,23 +7,18 @@ use warnings;
 use FindBin;
 use lib "$FindBin::Bin/lib";
 
-use Inline with => 'OctaveInline';
-use Inline CPP =>;
-	
+use Path::Class;
+use Inline CPP =>
+	Config =>
+	#print_info => 1,
+	#force_build => 1,
+	clean_after_build => 0;
+use Octave::Parser;
 
-print "9 + 16 = ", add(9, 16), "\n";
-print "9 - 16 = ", subtract(9, 16), "\n";
+my $code = file('example.m')->slurp;
+my $p = Octave::Parser->new( $code );
 
-__END__
-__CPP__
+use DDP; p $p;
 
-#include "config.h"
-#include "parse.h"
+# /usr/include/octave-3.8.2/octave/parse.h
 
-int add(int x, int y) {
-	return x + y;
-}
-
-int subtract(int x, int y) {
-	return x - y;
-}
